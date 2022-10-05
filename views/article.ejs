@@ -1,0 +1,47 @@
+<% include ./partials/header.ejs %>
+
+<%
+  var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var getDateAndTime =(str) => {
+    let date = new Date(str);
+    let res = `${date.getDate()} ${month[date.getMonth()]}, ${date.getHours()}:${date.getMinutes()}`;
+    return res;
+  }
+%>
+
+<link type="text/css" href="/article.css" rel = "stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Comfortaa|Oxygen&display=swap" rel="stylesheet">
+
+<main class="wrapper">
+    <div class="container">
+        <div class="progress z-depth-1">
+            <div class="determinate" style="width: 0%"></div>
+        </div>
+        <div  class="news-title white z-depth-2">
+            <h5> <%= data.title %> </h5>
+            <blockquote class=""><%= data.author %></blockquote>
+            <div><p class="right date grey lighten-2"> 
+                <%= data.publishedAt ? getDateAndTime(data.publishedAt) : data.timeAgo ? data.timeAgo : "" %> 
+            </p></div>
+        </div>
+
+        <img src="<%= data.urlToImage %>" 
+            onerror="this.onerror=null;
+            this.src='https://cdn.dribbble.com/users/1356093/screenshots/4543893/dribble_photoshop_2018_05_02_1x.png';">
+
+
+        <% for(let i = 0; i < p.length; i++ ) { %>
+
+            <p class="p-news"><%= p[i] %></p>
+    
+        <% } %>
+    </div>
+    
+</main>
+
+
+
+<script src="/article.js"></script>
+<script src="/dateConverter.js"></script>
+
+<% include ./partials/footer.ejs %>

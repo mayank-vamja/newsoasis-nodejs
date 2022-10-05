@@ -1,0 +1,33 @@
+
+/* TO HIDE SCROLL BAR */
+/* .news-view::-webkit-scrollbar { width: 0 important }
+.news-view { overflow: -moz-scrollbars-none; } 
+.news-view { -ms-overflow-style: none; } */
+
+.news-view {
+    overflow-y: scroll;
+}
+
+h4 {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    margin-top: 93px;
+}
+
+.date {
+    border-radius: 20px;
+    padding: 0 10px;
+}
+
+.news-content {
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+}
+
+img {
+    object-fit:contain;
+    margin: 0 auto;
+    border: 1px grey solid;
+    border-radius: 10px;
+    width: 100%;
+}

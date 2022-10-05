@@ -1,0 +1,181 @@
+<% include ./partials/header.ejs %>
+
+<link type="text/css" href="index.css" rel="stylesheet">
+
+<style>
+  .hover-grey:hover {
+    background-color: #f5f5f5;
+  }
+</style>
+
+<main>
+
+  <!-- ALL NEWS -->
+  <div class="container" id="news-container">
+
+    <% if(!data) { %>
+    <h1> SERVER NOT RESPONDING </h1>
+    <% } else {%>
+
+    <div>
+
+      <h4>Big Stories of 24 hours</h4>
+      <div class="divider"></div>
+
+      <!-- <div class="carousel carousel-slider center">
+        <div class="carousel-fixed-item center">
+          <a class="btn waves-effect white grey-text darken-text-2">button</a>
+        </div>
+        <div class="carousel-item red white-text" href="#one!">
+          <h2>First Panel</h2>
+          <p class="white-text">This is your first panel</p>
+        </div>
+        <div class="carousel-item amber white-text" href="#two!">
+          <h2>Second Panel</h2>
+          <p class="white-text">This is your second panel</p>
+        </div>
+        <div class="carousel-item green white-text" href="#three!">
+          <h2>Third Panel</h2>
+          <p class="white-text">This is your third panel</p>
+        </div>
+        <div class="carousel-item blue white-text" href="#four!">
+          <h2>Fourth Panel</h2>
+          <p class="white-text">This is your fourth panel</p>
+        </div>
+      </div> -->
+
+      <ul class="collapsible z-depth-0">
+        <% for(let i=0; i < bigStories.length; i++) { %>
+
+          <li>
+            <div class="collapsible-header">
+              <div class="card horizontal valign-wrapper hoverable waves-effect waves-teal">
+                <div class="card-image-c">
+                  <img alt="No Image" class="news-thumbnail" src="<%= bigStories[i].image ? bigStories[i].image.imgUrl:'' %>"
+                    onerror="this.onerror=null;this.src='https://cdn0.iconfinder.com/data/icons/communication-cool-vector-3/128/119-512.png';">
+                </div>
+                <div class="card-stacked">
+                  <div class="card-content">
+                    <h6 class="m0">
+                      <%= bigStories[i].title %>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="collapsible-body">
+
+              <div class="collection">
+                <% let articles=bigStories[i].articles; for(let j=0; j < articles.length; j++) { %>
+
+                  <a target="_blank" href="<%= articles[j].url %>">
+                    <div class="hover-grey">
+                      <p class="m0 article-source teal-text">
+                        <%= articles[j].source %>
+                      </p>
+                      <p class="m0 article-title black-text">
+                        <%= articles[j].articleTitle %>
+                      </p>
+                      <p class="m0 grey-text right-align blog-date">
+                        <%= articles[j].time %>
+                      </p>
+                      <div class="divider"></div>
+                    </div>
+                  </a>
+
+                  <% } %>
+              </div>
+            </div>
+          </li>
+          <% } %>
+      </ul>
+
+      <h5 class="blue-grey-text">Trending News Stories</h5>
+
+      <ul id="tabs-swipe-demo" class="tabs z-depth-1">
+        <% data.map((item, i) => { %>
+          <li class="tab teal-text col"><a href="#swipe-<%= i %>"><%= item.title.query %></a></li>
+        <% })%>
+      </ul>
+
+      <% for(let i = 0; i < data.length; i++) { %>
+
+        <div id="swipe-<%= i %>">
+          <!-- <div class="chip cyan"><%= data[i].title.query %></div> -->
+
+          <ul class="collapsible z-depth-0">
+          <% let articles = data[i].articles; for(let j = 0; j < articles.length; j++) { %>
+
+            <li>
+              <div class="collapsible-header">
+                <div class="card horizontal valign-wrapper hoverable waves-effect waves-teal">
+                  <div class="card-image-c">
+                    <img alt="No Image" class="news-thumbnail" src="<%= articles[j].image ? articles[j].image.imageUrl:'' %>"
+                      onerror="this.onerror=null;this.src='https://cdn0.iconfinder.com/data/icons/communication-cool-vector-3/128/119-512.png';">
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      <p class="teal-text article-source"><%= articles[j].source %></p>
+                      <p class="article-title"><%= articles[j].title %></p>
+                      <p class="grey-text right blog-date"><%= articles[j].timeAgo %></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="collapsible-body">
+                <blockquote class="">Source: <%= articles[j].source %></blockquote>
+                <p class="grey-text"><%= articles[j].snippet %></p>
+                <div class="row">
+                  <a href="<%=
+                    '/article?data='
+                    + JSON.stringify({
+                      source: { name: articles[j].source },
+                      authour: '',
+                      title: articles[j].title,
+                      url: articles[j].url,
+                      urlToImage: articles[j].image ? articles[j].image.imageUrl : '',
+                      timeAgo: articles[j].timeAgo,
+                      content: '',
+                      description: '',
+                    }) %>" class="col waves-effect waves-light btn">Read
+                    More</a>
+                  <a href="<%= articles[j].url %>" target="_blank" class="col indigo waves-effect waves-light btn">News URL</a>
+                </div>
+              </div>
+            </li>
+
+          <% } %>
+          </ul>
+
+        </div>
+
+      <% } %>
+
+
+    </div>
+
+    <% } %>
+
+  </div>
+
+</main>
+
+<script>
+  $(document).ready(function () {
+      var randomColor = 'rgb(' + (Math.random() * 255) + ',' + Math.random() * 255 + ',' + Math.random() * 255 + ')';
+      $('.news-thumbnail').css('background', randomColor);
+      $('.collapsible').collapsible();
+      $('.tabs').tabs();
+      // $('.carousel.carousel-slider').carousel({
+      //   fullWidth: true,
+      //   indicators: true
+      // });
+      // autoplay();
+      // function autoplay() {
+      //   $('.carousel').carousel('next');
+      //   setTimeout(autoplay, 2500);
+      // }
+    });
+</script>
+
+<% include ./partials/footer.ejs %>
