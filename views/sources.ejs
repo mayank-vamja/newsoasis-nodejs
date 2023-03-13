@@ -1,0 +1,39 @@
+<% include ./partials/header.ejs %>
+
+<main>
+
+<div class="container">
+    
+    <h5 class="center-align grey-text">Our trusted news sources</h5>
+
+    <ul class="collapsible popout">
+        
+    <% 
+    var s = sources.sources;
+    for(var i = 0; i < s.length; i++ )
+    { %>
+    
+      
+        <li>
+            <div class="collapsible-header">
+                <i><img style="width:100%;" src="https://www.google.com/s2/favicons?domain=<%= s[i].url %>"></i>
+                <span class="flow-text"> <%= s[i].name %> </span>
+            </div>
+            <div class="collapsible-body">
+                <span><%= s[i].description %></span>
+                <a class="btn" href="<%= s[i].url %>">SOURCE URL</a>
+            </div>
+
+        </li>
+    
+    <% } %>
+        
+    </ul>
+    
+</div>
+
+</main>
+
+<script src="sources.js"></script>
+
+<% include ./partials/footer.ejs %>

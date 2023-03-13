@@ -1,0 +1,131 @@
+ <html>
+    <head>
+        <title>NEWSOASIS</title>
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+
+        <link rel = "stylesheet"
+            href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel = "stylesheet"
+            href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous">
+        </script>         
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        
+        <link rel = "stylesheet" href = "/app.css">
+        
+    </head>
+    <body>
+
+
+    <header>
+        <nav class="white navbar-fixed">
+            <div class="nav-wrapper container">
+                <a href="/" class="brand-logo logo-container">NEWSOASIS</a>
+                <a href="#" data-target="nav-mobile" class="right teal-text dropdown-trigger hide-on-large-only"><i class="material-icons">more_vert</i></a>
+                <a href="#" data-target="slide-out" class="teal-text sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="material-icons teal-text">search</i></a>
+                    </li>
+                    <li><a href="/">Home</a></li>`
+                    <li><a target="_blank" href="https://medium.com/@mayankvamja">Blog</a></li>
+                </ul>             
+            </div>
+        </nav>
+        
+        <!-- Side Bar -->
+        <ul id="slide-out" class="sidenav sidenav-fixed">
+            <li><div>
+                <div class="card-panel logo-bg">
+                    <h4 class="logo-container center-align">NEWSOASIS</h4>
+                    <p>-Read news from trusted sources.</p>
+                </div>
+            </div></li>
+            <li><div class="divider"></div></li>
+            <li><a href="/" id="home"><i class="material-icons">home</i>Home</a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="/top-headlines" id="top-headlines"><i class="material-icons">event_note</i>Top Headlines</a></li>
+            <li><a href="/entertainment" id="entertainment"><i class="material-icons">movie</i>Entertainment</a></li>
+            <li><a href="/sports" id="sports"><i class="material-icons">directions_run</i>Sports</a></li>
+            <li><a href="/health" id="health"><i class="material-icons">account_balance</i>Health</a></li>
+            <li><a href="/business" id="business"><i class="material-icons">attach_money</i>Business</a></li>
+            <li><a href="/science" id="science"><i class="material-icons">polymer</i>Science</a></li>
+            <li><a href="/technology" id="technology"><i class="material-icons">tablet_android</i>Technology</a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="/sources" id="technology"><i class="material-icons">grain</i>News Sources</a></li>
+            <li><div class="divider"></div></li>
+        </ul>
+        
+    </header>
+    
+    <ul class="dropdown-content" id="nav-mobile">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blogs">Blog</a></li>
+    </ul>
+
+    <div class="bottom-tab z-depth-2 hide-on-large-only">
+        <ul class="center-align row m0">
+            <a href="/">
+                <li class="col s4 waves-effect teal-text">
+                    <i class="small material-icons">home</i>
+                    <p class="m0">Home</p>
+                </li>
+            </a>
+            <a class="modal-trigger" href="#modal1">
+                <li class="col s4 waves-effect teal-text">
+                    <i class="small material-icons">search</i>
+                    <p class="m0">Search</p>
+                </li>
+            </a>
+            <a href="/top-headlines">
+                <li class="col s4 waves-effect teal-text">
+                    <i class="small material-icons">event_note</i>
+                    <p class="m0">Headlines</p>
+                </li>
+            </a>
+        </ul>
+    </div>
+
+    <div id="modal1" class="modal bottom-sheet">
+        <div class="container">
+            <form action="/search" id="search-from" class="search-from white z-index-1">
+                <div class="input-field">
+                    <i class="material-icons prefix text-teal">search</i>
+                    <input oninput="onSearchInput(this.value)" name="q" type="text" id="autocomplete-input" class="autocomplete" autocomplete="off">
+                    <label for="autocomplete-input">Search News</label>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <style>
+        .modal.bottom-sheet {
+            max-height: 70% !important;
+            min-height: 50% !important;
+        }
+    </style>
+
+    <script>
+        function onSearchInput(value) {
+            if(value.length < 3) return;
+            $.ajax({
+                url: "/search-autocomplete?q=" + value,
+                success: (res) => {
+                    let data = (JSON.parse(res)).default.topics;
+                    let autocompleteObject = {};
+                    data.forEach(i => {
+                        autocompleteObject[i.title.normalize('NFKD')] = null;
+                    })
+                    console.log(autocompleteObject);
+                    $('#autocomplete-input').autocomplete('updateData', autocompleteObject);
+                    $('#autocomplete-input').autocomplete('open');
+
+                }
+            })
+        }
+    </script>
+
+<script src = "/header.js"></script>

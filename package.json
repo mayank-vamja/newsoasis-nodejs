@@ -1,0 +1,31 @@
+{
+  "name": "news",
+  "version": "2.0.0",
+  "description": "News using newsap.org JSON API: news arround all over the world with diffeent categories.",
+  "main": "app.js",
+  "scripts": {
+    "test": "",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "NEWS",
+    "WORLD-NEWS",
+    "SPORTS-NEWS",
+    "LATEST-NEWS",
+    "BREAKING-NEWS",
+    "INDIA-NEWS"
+  ],
+  "author": "Mayank Vamja",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.9",
+    "cors": "^2.8.5",
+    "ejs": "^2.7.4",
+    "express": "^4.17.1",
+    "google-trends-api": "^4.9.2",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.7",
+    "newsapi": "^2.4.1",
+    "nodemailer": "^6.6.0"
+  }
+}

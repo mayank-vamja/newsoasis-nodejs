@@ -1,0 +1,169 @@
+<% include ./partials/header.ejs %>
+
+<%
+    var noOfPages = Math.ceil(data.totalResults / 20);
+    var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var getDateAndTime =(str) => {
+        let date = new Date(str);
+        let res = `${date.getDate()} ${month[date.getMonth()]}, ${date.getHours()}:${date.getMinutes()}`;
+        return res;
+    }
+%>
+
+<link type="text/css" href="index.css" rel = "stylesheet">
+
+<main>
+
+<!-- ALL NEWS -->
+<div class="container"  id="news-container">
+
+    <div class="row">
+        <!-- <div class="col s4 m4 l4"> -->
+        <div class="card-panel gradient-card hoverable waves-effect waves-red" onclick="viewStories()">
+            <span class="story-text white-text">INDIA'S TOP 20 STORIES</span>
+            <div class="progress">
+                <div class="story-pb red"></div>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- <div class="col s8 m8 l8"> -->
+            <h6 class="grey-text"style="padding-left:10px">Trending this week <i class="material-icons">trending_up</i></h6>
+            <div id="trends">
+            </div>
+        <!-- </div> -->
+    </div>
+
+    <% if(data.status != 'ok') { %>
+        <h1> SERVER NOT RESPONDING </h1>
+    <% } else {%>
+
+        <% if(query.q && query.q.length > 0) { %>
+            <div class="chip"> Seach results for : <%= query.q %></div>
+        <% } %>
+
+        <% if(typeof cat !== 'undefined' && cat && cat.length > 0) { %>
+            <div class="chip teal lighten-3"> <%= cat.toUpperCase() %></div>
+        <% } %>
+
+        <ul class="collapsible z-depth-0">
+        <% var articles = data.articles; %>
+        <% for(var i = 0; i < articles.length; i ++) { %>
+            <li>
+                <div class="collapsible-header">
+            <div class="card horizontal valign-wrapper hoverable waves-effect waves-teal">
+                <div class="card-image-c">
+                    <img alt="No Image" class="news-thumbnail" src="<%= articles[i].urlToImage %>" onerror="this.onerror=null;this.src='https://cdn0.iconfinder.com/data/icons/communication-cool-vector-3/128/119-512.png';">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p class="article-title"><%= articles[i].title %></p>
+                        <p class="article-text"><%= articles[i].description %></p>
+                        <p class="grey-text right blog-date"><%= moment(articles[i].publishedAt).fromNow() %></p>
+                    </div>
+                </div>
+            </div>
+            </div>
+                <div class="collapsible-body">
+                    <blockquote class="right">Source: <%= articles[i].source.name %></blockquote>
+                    <blockquote >Author: <%= articles[i].author %></blockquote>
+                    <p class="grey-text"><%= articles[i].description %></p>
+                    <div class="news-img-div">
+                    <img alt="No Image" class="news-img" src="<%= articles[i].urlToImage %>" onerror="this.onerror=null;this.src='https://img.freepik.com/free-vector/news-vector-trendy-banner_36298-10.jpg?size=626&ext=jpg';">
+                    </div>
+                    <p class=""><%= articles[i].content %></p>
+                    <div class="row">
+                        <a href="<%= 'article?data='+JSON.stringify(articles[i]) %>" class="col waves-effect waves-light btn">Read More</a>
+                        <a href="<%= articles[i].url %>" target="_blank" class="col indigo waves-effect waves-light btn">News URL</a>
+                    </div>
+                </div>
+            </li>
+        <% } %>
+        </ul>
+    <% } %>
+
+    <% if(noOfPages > 1) { %>
+    <div class="card-panel white" style="padding-top: 5px; padding-bottom: 5px;">
+        <p>Pages</p>
+        <ul class="pagination">
+            <li class="<%= (!query.page || query.page == 1) ? 'disabled' : 'waves-effect' %>>">
+                <form method="GET">
+                    <button style="width: 30px;" type="submit" name="page" value="<%= query.page ? (query.page - 1) : 1  %>"
+                        class="p0 btn btn-flat <%= (!query.page || query.page == 1) ? 'disabled' : '' %>">
+                        <i class="material-icons">chevron_left</i>
+                    </button>
+                </form>
+            </li>
+            <% for(let i = 0; i < noOfPages && i < 10; i++) { %>
+            <li
+                class="p0 <%= (!query.page && i == 0) ? 'active teal disabled' : query.page == (i+1) ? 'active teal disabled' : 'waves-effect' %>">
+                <% if((!query.page && i == 0) || (query.page == i+1)) { %>
+                <a href="javascript:{}" class="white-text valign-wrapper"><%= i+1 %></a>
+                <% } else { %>
+                <form class="m0 p0" method="GET">
+                    <button type="submit" class="m0 center-align btn btn-flat" name="page"
+                        value="<%= i + 1 %>"><%= i + 1 %></button>
+                </form>
+                <% } %>
+            </li>
+            <% } %>
+            <li class="m0 p0 <%= (query.page && query.page == noOfPages) ? 'disabled' : 'waves-effect' %>>">
+                <form class="m0 p0" method="GET">
+                    <button style="width: 30px;" type="submit" name="page"
+                        value="<%= query.page ? (parseInt(query.page) + 1) : 2  %>"
+                        class="p0 btn btn-flat <%= (query.page && query.page == noOfPages) ? 'disabled' : '' %>">
+                        <i class="material-icons">chevron_right</i>
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+    <% } %>
+
+</div>
+
+</main>
+
+<style>
+    #trends {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    #trends .card-trends {
+        width: fit-content;
+        color: black;
+        padding: 10px;
+        border-radius: 8px !important;
+        margin: 0 0 10px 10px;
+    }
+</style>
+<script>
+    var colors = ["indigo", "blue", "teal", "red", "pink", "purple", "blue", "deep-purple", "amber", "green", "orange", "deep-orange", "brown"];
+    $(document).ready(() => {
+        $.ajax({
+            url: "/get-realtime-trends",
+            success: (res) => {
+                if(res.success && res.data.length > 0) {
+                    res.data.forEach(i => {
+                        let htmlString = `
+                            <a href="/search?q=${i}">
+                            <div class="card-trends ${colors[Math.floor(Math.random() * 13)]} lighten-3">
+                                ${i}
+                            </div>
+                            </a>
+                        `;
+                        $("#trends").append(htmlString)
+                    })
+                }
+            }
+        })
+    })
+</script>
+
+<script src="index.js"></script>
+<script type="text/javascript" src="screenfull.js"></script>
+
+<% include ./partials/footer.ejs %>

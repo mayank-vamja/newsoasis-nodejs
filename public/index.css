@@ -1,0 +1,153 @@
+.gradient-card {
+  background-image: linear-gradient(
+    to right top,
+    #008e9b,
+    #0099a1,
+    #00a5a5,
+    #00b0a8,
+    #00bba9,
+    #00bbb2,
+    #00babb,
+    #00b9c2,
+    #00abcd,
+    #009bd7,
+    #0089d9,
+    #2c73d2
+  );
+  border-radius: 20px;
+}
+
+.story-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+#slide-out li {
+  margin-top: 8px;
+}
+
+.collapsible li {
+  margin: 20px auto;
+}
+
+.dd {
+  padding: 0 20px;
+}
+
+.btn {
+  width: calc(50% - 6px);
+  margin: 2px;
+}
+
+#news-container {
+  max-width: 600px;
+  margin: 10px auto;
+}
+
+.card {
+  width: 100%;
+}
+
+.card-image-c {
+  border-radius: 6px;
+  margin: 0 5px 0 0;
+  overflow: hidden;
+}
+
+.news-thumbnail {
+  width: 125px;
+  height: 125px;
+  object-fit: cover;
+}
+
+.news-img-div {
+  width: 100%;
+  max-width: 600px;
+  object-fit: cover;
+}
+
+.news-img {
+  width: inherit;
+}
+
+.card {
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
+.card .card-content {
+  padding: 5px;
+}
+
+.article-source {
+  font-weight: bolder;
+}
+
+.article-title {
+  color: #212121;
+  padding: 0;
+  max-height: 90px;
+  padding-bottom: 4px;
+  font-size: 14px;
+  line-height: 1.2rem;
+  text-align: justify;
+  overflow: hidden;
+}
+
+.article-text {
+  color: #766776;
+  font-size: 11px;
+  max-height: 30px;
+  line-height: 1rem;
+  text-align: justify;
+  overflow: hidden;
+}
+
+.blog-date {
+  /* text-align: right; */
+  font-size: 12px;
+  height: 25px;
+  letter-spacing: 1px;
+}
+
+.collapsible {
+  border-width: 0;
+  margin: 0 auto;
+}
+
+.collapsible-header {
+  border-width: 0px;
+  padding: 0;
+}
+
+.collapsible-body {
+  padding: 20px 0;
+}
+
+blockquote {
+  max-width: 45%;
+}
+
+.pagination li,
+.pagination li a,
+.pagination li .btn {
+  text-align: center;
+  height: 35px !important;
+  width: 35px !important;
+  line-height: 35px !important;
+  padding: 0;
+  margin: 0;
+}
+
+.m0 {
+  margin: 0;
+}
+.p0 {
+  padding: 0;
+}
+
+.tabs {
+  height: 60px;
+}
